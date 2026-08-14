@@ -16,5 +16,25 @@ namespace CartManagement.Repositories
         {
             return cartItems;
         }
+        public int GetTotalItemCount()
+        {
+            int count = 0;
+
+            foreach (CartItem item in cartItems)
+            {
+                count += item.Quantity;
+            }
+
+            return count;
+        }
+        public void Remove(int id)
+        {
+            CartItem item = cartItems.FirstOrDefault(x => x.Id == id);
+
+            if (item != null)
+            {
+                cartItems.Remove(item);
+            }
+        }
     }
 }

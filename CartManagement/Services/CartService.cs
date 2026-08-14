@@ -18,6 +18,10 @@ namespace CartManagement.Services
         {
             cartRepository.Add(item);
         }
+        public void RemoveItem(int id)
+        {
+            cartRepository.Remove(id);
+        }
         public decimal CalculateTotal()
         {
             List<CartItem> items = cartRepository.GetAll();

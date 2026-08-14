@@ -2,35 +2,60 @@
 using CartManagement.Repositories;
 using CartManagement.Services;
 
-class Program
+namespace CartManagement
 {
-    static void Main(string[] args)
+    internal class Program
     {
-        CartRepository cartRepository = new CartRepository();
-
-        CartService cartService = new CartService(cartRepository);
-
-        CartItem item1 = new CartItem
+        static void Main(string[] args)
         {
-            Id = 1,
-            ProductName = "Laptop",
-            Quantity = 2,
-            UnitPrice = 50000
-        };
+            // Create Repository
+            CartRepository cartRepository = new CartRepository();
 
-        CartItem item2 = new CartItem
-        {
-            Id = 2,
-            ProductName = "Mouse",
-            Quantity = 3,
-            UnitPrice = 500
-        };
+            // Give Repository to Service
+            CartService cartService = new CartService(cartRepository);
 
-        cartService.AddItem(item1);
-        cartService.AddItem(item2);
+            // Create 3 CartItems
+            CartItem item1 = new CartItem
+            {
+                Id = 1,
+                ProductName = "Laptop",
+                Quantity = 2,
+                UnitPrice = 50000
+            };
 
-        decimal total = cartService.CalculateTotal();
+            CartItem item2 = new CartItem
+            {
+                Id = 2,
+                ProductName = "Mouse",
+                Quantity = 3,
+                UnitPrice = 500
+            };
 
-        Console.WriteLine("Cart Total: " + total);
+            CartItem item3 = new CartItem
+            {
+                Id = 3,
+                ProductName = "Keyboard",
+                Quantity = 1,
+                UnitPrice = 1500
+            };
+
+            // Add all 3 items
+            cartService.AddItem(item1);
+            cartService.AddItem(item2);
+            cartService.AddItem(item3);
+
+            // Calculate total before removing anything
+            decimal totalBeforeRemove = cartService.CalculateTotal();
+
+            Console.WriteLine("Total before removal: " + totalBeforeRemove);
+
+            // Remove Mouse (Id = 2)
+            cartService.RemoveItem(2);
+
+            // Calculate total again
+            decimal totalAfterRemove = cartService.CalculateTotal();
+
+            Console.WriteLine("Total after removal: " + totalAfterRemove);
+        }
     }
 }
